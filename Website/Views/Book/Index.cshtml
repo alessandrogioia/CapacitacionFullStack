@@ -1,0 +1,27 @@
+﻿@model List<Website.Models.DTOs.BookDTOs.BookGridDTO>
+
+<div class="col-md-12">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ISBN</th>
+                <th>Title</th>
+                <th>Release Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model) 
+            {
+            <tr>
+                <td>@book.ISBN</td>
+                <td>@book.Title</td>
+                <td>@book.ReleaseDate</td>
+                <td><a class="btn btn-primary" href="/Book/Edit/@book.Id">Edit</a></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
