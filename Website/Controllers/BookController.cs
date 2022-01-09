@@ -16,11 +16,65 @@ namespace Website.Controllers
         // GET: Book
         public ActionResult Index()
         {
-            List<BookGridDTO> books = db.Books
-                            .Include("Publisher")
-                            .Include("Authors")
-                            .ToList().Select(b => new BookGridDTO
-            {
+            return View();
+        }
+
+		public ActionResult GetPage()
+		{
+            // params
+			int paginas = Convert.ToInt32(Request.QueryString["start"]);
+			int cantidad = Convert.ToInt32(Request.QueryString["length"]);
+			int orderColumn = Convert.ToInt32(Request.QueryString["order[0][column]"]);
+			string orderDir = Request.QueryString["order[0][dir]"];
+			string search = Request.QueryString["search[value]"];
+
+            // basic query
+			IQueryable<Book> dbBooks = db.Books
+							.Include("Publisher")
+							.Include("Authors");
+
+
+            int recordsTotal = dbBooks.Count();
+
+            // filters
+            if (search != "")
+			{
+				dbBooks = dbBooks.Where(x => x.Name.Contains(search)
+											 || x.Publisher.Name.Contains(search)
+											 || x.ISBN.Contains(search)
+											 || x.Authors.Any(a => a.Name.Contains(search)));
+			}
+
+
+			int recordsFiltered = dbBooks.Count();
+
+            // ordering
+			if (orderDir == "asc")
+			{
+				if (orderColumn == 1)
+					dbBooks = dbBooks.OrderBy(x => x.Name);
+				else if (orderColumn == 2)
+                    dbBooks = dbBooks.OrderBy(x => x.ReleaseDate);
+                else if (orderColumn == 3)
+                    dbBooks = dbBooks.OrderBy(x => x.Publisher.Name);
+                else
+					dbBooks = dbBooks.OrderBy(x => x.ISBN);
+			}
+			else if (orderDir == "desc")
+			{
+                if (orderColumn == 1)
+                    dbBooks = dbBooks.OrderByDescending(x => x.Name);
+                else if (orderColumn == 2)
+                    dbBooks = dbBooks.OrderByDescending(x => x.ReleaseDate);
+                else if (orderColumn == 3)
+                    dbBooks = dbBooks.OrderByDescending(x => x.Publisher.Name);
+                else
+                    dbBooks = dbBooks.OrderByDescending(x => x.ISBN);
+            }
+
+            // get page
+			List<BookGridDTO> data = dbBooks.Skip(paginas).Take(cantidad).ToList().Select(b => new BookGridDTO
+			{
                 Id = b.Id,
                 ISBN = b.ISBN,
                 ReleaseDate = b.ReleaseDate.ToString("dd-MM-yyyy"),
@@ -29,10 +83,13 @@ namespace Website.Controllers
                 Authors = b.Authors != null ? b.Authors.Select(a => a.Name).ToList() : new List<string>()
             }).ToList();
 
-            return View(books);
-        }
+			var result = new { data = data, recordsTotal = recordsTotal, recordsFiltered = recordsFiltered };
 
-        public ActionResult Create() 
+			return Json(result, JsonRequestBehavior.AllowGet);
+
+		}
+
+		public ActionResult Create() 
         {
             BookFormDTO model = new BookFormDTO();
             AddViewDataForForms();

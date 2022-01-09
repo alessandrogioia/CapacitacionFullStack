@@ -1,5 +1,4 @@
-﻿@model List<Website.Models.DTOs.BookDTOs.BookGridDTO>
-
+﻿
 <div class="col-md-12">
 
     <div class="row">
@@ -27,27 +26,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var book in Model)
-            {
-                <tr>
-                    <td>@book.ISBN</td>
-                    <td>@book.Title</td>
-                    <td>@book.ReleaseDate</td>
-                    <td>@book.Publisher</td>
-                    <td>
-                        <ul>
-                            @foreach (var author in book.Authors)
-                            {
-                                <li>@author</li>
-                            }
-                        </ul>
-                    </td>
-                    <td>
-                        <a class="btn btn-primary" href="/Book/Edit/@book.Id">Edit</a>
-                        <button class="btn btn-danger" onclick="deleteBook('@book.Id')">Delete</button>
-                    </td>
-                </tr>
-            }
+         
         </tbody>
     </table>
 
@@ -80,7 +59,59 @@
         }
 
         $(document).ready(function () {
-            $('#book-table').DataTable();
+            $('#book-table').DataTable({
+                processing: true,
+                responsive: true,
+                serverSide: true,
+                ajax: "/Book/GetPage",
+                columns: [
+                    {
+                        data: "ISBN",
+                        searchable: true,
+                        orderable: true
+                    },
+                    {
+                        data: "Title",
+                        searchable: true,
+                        orderable: true
+                    },
+                    {
+                        data: "ReleaseDate",
+                        searchable: true,
+                        orderable: true
+                    },
+                    {
+                        data: "Publisher",
+                        searchable: true,
+                        orderable: true
+                    },
+                    {
+                        searchable: false,
+                        orderable: false,
+                        mRender: function (data, type, row) {
+                            let authors_html = `<ul>`;
+
+                            for (var i = 0; i < row.Authors.length; i++) {
+                                authors_html += `<li>${row.Authors[i]}</li>`;
+                            }
+
+                            authors_html += "</ul>";
+
+                            return authors_html;
+                        }
+                    },
+                    {
+                        searchable: false,
+                        orderable: false,
+                        mRender: function (data, type, row) {
+                            let buttons_html = `<a class="btn btn-primary" href="/Book/Edit/${row.Id}">Edit</a>`;
+                            buttons_html += `<button class="btn btn-danger" onclick="deleteBook('${row.Id}')">Delete</button>`;
+
+                            return buttons_html;
+                        }
+                    },
+                ]
+            });
         });
     </script>
 }
