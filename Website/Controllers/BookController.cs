@@ -34,8 +34,10 @@ namespace Website.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(BookFormDTO model) 
+        public ActionResult Create(BookFormDTO model)
         {
+            BookCustomValidations(model);
+
             if (ModelState.IsValid) 
             {
                 Book book = model.ToEntity();
@@ -45,7 +47,8 @@ namespace Website.Controllers
 
                 return RedirectToAction("Index");
             }
-            return View();
+
+            return View(model);
         }
 
         public ActionResult Edit(Guid id)
@@ -60,6 +63,8 @@ namespace Website.Controllers
         [HttpPost]
         public ActionResult Edit(BookFormDTO model)
         {
+            BookCustomValidations(model);
+
             if (ModelState.IsValid)
             {
                 Book dbBook = db.Books.Find(model.Id);
@@ -72,6 +77,11 @@ namespace Website.Controllers
             return View(model);
         }
 
+        private void BookCustomValidations(BookFormDTO model)
+        {
+            if (db.Books.Any(b => b.ISBN == model.ISBN && b.Id != model.Id))
+                ModelState.AddModelError("ISBN", "There is already a book with this ISBN in the database");
+        }
 
     }
 }
