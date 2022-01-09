@@ -69,5 +69,16 @@ namespace Website.Controllers
             }
             return View(model);
         }
+
+        [HttpPost]
+        public ActionResult Delete(Guid id)
+        {
+            Author dbAuthor = db.Authors.Find(id);
+
+            db.Authors.Remove(dbAuthor);
+            db.SaveChanges();
+            
+            return Json("OK", JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -61,14 +61,25 @@ namespace Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                Publisher dbBook = db.Publishers.Find(model.Id);
-                model.SetProperties(dbBook);
+                Publisher dbPublisher = db.Publishers.Find(model.Id);
+                model.SetProperties(dbPublisher);
 
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(Guid id)
+        {
+            Publisher dbPublisher = db.Publishers.Find(id);
+
+            db.Publishers.Remove(dbPublisher);
+            db.SaveChanges();
+
+            return Json("OK", JsonRequestBehavior.AllowGet);
         }
     }
 }

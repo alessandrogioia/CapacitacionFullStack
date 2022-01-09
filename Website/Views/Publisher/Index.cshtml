@@ -2,11 +2,20 @@
 
 <div class="col-md-12">
 
-    <div style="text-align:right">
-        <a class="btn btn-primary" href="/Publisher/Create">Create</a>
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Publishers</h3>
+        </div>
+        <div class="col-md-4" style="text-align:right">
+            <h3>
+                <a class="btn btn-primary btn-lg" href="/Publisher/Create">Create</a>
+            </h3>
+        </div>
     </div>
 
-    <table class="table table-striped">
+    <hr />
+
+    <table class="table table-striped" id="publisher-table">
         <thead>
             <tr>
                 <th>Name</th>
@@ -14,14 +23,49 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var publisher in Model) 
+            @foreach (var publisher in Model)
             {
             <tr>
                 <td>@publisher.Name</td>
-                <td><a class="btn btn-primary" href="/Publisher/Edit/@publisher.Id">Edit</a></td>
+                <td>
+                    <a class="btn btn-primary" href="/Publisher/Edit/@publisher.Id">Edit</a>
+                    <button class="btn btn-danger" onclick="deletePublisher('@publisher.Id')">Delete</button>
+                </td>
             </tr>
             }
         </tbody>
     </table>
 
 </div>
+
+@section Scripts{
+    <script>
+
+        function deletePublisher(_id) {
+            swal({
+                title: "Wanna delete this publisher?",
+                text: "Once deleted, you will not be able to recover this publisher",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: "/Publisher/Delete",
+                            type: "POST",
+                            data: { id: _id },
+                            success: function (result) {
+                                window.location.reload();
+                            }
+                        });
+                    }
+                });
+        }
+
+
+        $(document).ready(function () {
+            $('#publisher-table').DataTable();
+        });
+    </script>
+}

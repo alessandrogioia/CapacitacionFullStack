@@ -2,11 +2,20 @@
 
 <div class="col-md-12">
 
-    <div style="text-align:right">
-        <a class="btn btn-primary" href="/Book/Create">Create</a>
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Books</h3>
+        </div>
+        <div class="col-md-4" style="text-align:right">
+            <h3>
+                <a class="btn btn-primary btn-lg" href="/Book/Create">Create</a>
+            </h3>
+        </div>
     </div>
 
-    <table class="table table-striped">
+    <hr />
+
+    <table class="table table-striped" id="book-table">
         <thead>
             <tr>
                 <th>ISBN</th>
@@ -20,23 +29,58 @@
         <tbody>
             @foreach (var book in Model)
             {
-            <tr>
-                <td>@book.ISBN</td>
-                <td>@book.Title</td>
-                <td>@book.ReleaseDate</td>
-                <td>@book.Publisher</td>
-                <td>
-                    <ul>
-                        @foreach (var author in book.Authors)
-                        {
-                            <li>@author</li>
-                        }
-                    </ul>
-                </td>
-                <td><a class="btn btn-primary" href="/Book/Edit/@book.Id">Edit</a></td>
-            </tr>
+                <tr>
+                    <td>@book.ISBN</td>
+                    <td>@book.Title</td>
+                    <td>@book.ReleaseDate</td>
+                    <td>@book.Publisher</td>
+                    <td>
+                        <ul>
+                            @foreach (var author in book.Authors)
+                            {
+                                <li>@author</li>
+                            }
+                        </ul>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" href="/Book/Edit/@book.Id">Edit</a>
+                        <button class="btn btn-danger" onclick="deleteBook('@book.Id')">Delete</button>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
 
 </div>
+
+
+@section Scripts{
+    <script>
+
+        function deleteBook(_id) {
+            swal({
+                title: "Wanna delete this book?",
+                text: "Once deleted, you will not be able to recover this book",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: "/Book/Delete",
+                            type: "POST",
+                            data: { id: _id },
+                            success: function (result) {
+                                window.location.reload();
+                            }
+                        });
+                    }
+                });
+        }
+
+        $(document).ready(function () {
+            $('#book-table').DataTable();
+        });
+    </script>
+}
