@@ -1,4 +1,10 @@
-﻿@model Website.Models.DTOs.BookDTOs.BookFormDTO
+﻿@using Website.Models.DTOs.GenericDTOs;
+
+@model Website.Models.DTOs.BookDTOs.BookFormDTO
+
+@{
+    List<ComboListItem> publisherList = ViewData["PublishersList"] as List<ComboListItem>;
+}
 
 <div class="col-md-12">
 
@@ -17,6 +23,21 @@
             <input class="form-control" id="Title" name="Title" value="@Model.ISBN">
             <div class="invalid-feedback">
                 @Html.ValidationMessageFor(m => m.Title)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Description">Description</label>
+
+            <select class="form-control" id="SelectedPublisherId" name="SelectedPublisherId">
+                @foreach (var publisher in publisherList) 
+                { 
+                    <option @(publisher.Value == Model.SelectedPublisherId ? "selected" : "") value="@publisher.Value">@publisher.Text</option>
+                }
+            </select>
+
+            <div class="invalid-feedback">
+                @Html.ValidationMessageFor(m => m.SelectedPublisherId)
             </div>
         </div>
 
