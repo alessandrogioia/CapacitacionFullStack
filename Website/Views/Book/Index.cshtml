@@ -12,18 +12,20 @@
                 <th>ISBN</th>
                 <th>Title</th>
                 <th>Release Date</th>
+                <th>Publisher</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var book in Model)
             {
-                <tr>
-                    <td>@book.ISBN</td>
-                    <td>@book.Title</td>
-                    <td>@book.ReleaseDate</td>
-                    <td><a class="btn btn-primary" href="/Book/Edit/@book.Id">Edit</a></td>
-                </tr>
+            <tr>
+                <td>@book.ISBN</td>
+                <td>@book.Title</td>
+                <td>@book.ReleaseDate</td>
+                <td>@book.Publisher</td>
+                <td><a class="btn btn-primary" href="/Book/Edit/@book.Id">Edit</a></td>
+            </tr>
             }
         </tbody>
     </table>
