@@ -174,6 +174,7 @@
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\PublisherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -190,14 +191,21 @@
     <Compile Include="Migrations\202201090108382_book_publisher.Designer.cs">
       <DependentUpon>202201090108382_book_publisher.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201090231252_book_authors.cs" />
+    <Compile Include="Migrations\202201090231252_book_authors.Designer.cs">
+      <DependentUpon>202201090231252_book_authors.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Domain\Author.cs" />
     <Compile Include="Models\Domain\Book.cs" />
     <Compile Include="Models\Domain\Entity.cs" />
     <Compile Include="Models\Domain\Publisher.cs" />
     <Compile Include="Models\DTOs\GenericDTOs\ComboListItem.cs" />
-    <Compile Include="Models\DTOs\Publisher\PublisherFormDTO.cs" />
-    <Compile Include="Models\DTOs\Publisher\PublisherGridDTO.cs" />
+    <Compile Include="Models\DTOs\AuthorDTOs\AuthorFormDTO.cs" />
+    <Compile Include="Models\DTOs\AuthorDTOs\AuthorGridDTO.cs" />
+    <Compile Include="Models\DTOs\PublisherDTOs\PublisherFormDTO.cs" />
+    <Compile Include="Models\DTOs\PublisherDTOs\PublisherGridDTO.cs" />
     <Compile Include="Models\DTOs\BookDTOs\BookFormDTO.cs" />
     <Compile Include="Models\DTOs\BookDTOs\BookGridDTO.cs" />
     <Compile Include="Models\DTOs\EntityDTO.cs" />
@@ -268,9 +276,13 @@
     <Content Include="Views\Publisher\Create.cshtml" />
     <Content Include="Views\Publisher\Edit.cshtml" />
     <Content Include="Views\Publisher\Index.cshtml" />
+    <Content Include="Views\Author\Create.cshtml" />
+    <Content Include="Views\Author\Edit.cshtml" />
+    <Content Include="Views\Author\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -294,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201090108382_book_publisher.resx">
       <DependentUpon>202201090108382_book_publisher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201090231252_book_authors.resx">
+      <DependentUpon>202201090231252_book_authors.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

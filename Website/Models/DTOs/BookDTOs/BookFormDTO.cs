@@ -11,7 +11,10 @@ namespace Website.Models.DTOs.BookDTOs
     {
 
         #region Constructors
-        public BookFormDTO() { }
+        public BookFormDTO() 
+        {
+            SelectedAuthorIds = new List<Guid>();
+        }
         public BookFormDTO(Book book)
         {
             this.Id = book.Id;
@@ -20,6 +23,14 @@ namespace Website.Models.DTOs.BookDTOs
             this.ReleaseDate = book.ReleaseDate;
             this.Title = book.Name;
             this.SelectedPublisherId = book.PublisherId;
+
+            SelectedAuthorIds = new List<Guid>();
+            if (book.Authors != null)
+            {
+                foreach (var author in book.Authors)
+                    SelectedAuthorIds.Add(author.Id);
+            }
+
         }
         #endregion
 
@@ -42,12 +53,13 @@ namespace Website.Models.DTOs.BookDTOs
 
         [Required(ErrorMessage = "Please select a publisher")]
         public Guid? SelectedPublisherId { get; set; }
+        public List<Guid> SelectedAuthorIds { get; set; }
 
         #endregion
 
         #region Methods
 
-        public void SetProperties(Book book) 
+        public void SetProperties(Book book, ApplicationDbContext db) 
         {
             if (this.Id == Guid.Empty)
                 book.Id = Guid.NewGuid();
@@ -55,15 +67,19 @@ namespace Website.Models.DTOs.BookDTOs
             book.Description = this.Description;
             book.ISBN = this.ISBN;
             book.Name = this.Title;
-            book.ReleaseDate = this.ReleaseDate.Value;        
-            book.PublisherId = this.SelectedPublisherId.Value;        
+            book.ReleaseDate = this.ReleaseDate.Value;
+            book.PublisherId = this.SelectedPublisherId.Value;
+
+            book.Authors.Clear();
+            foreach (Guid authorid in this.SelectedAuthorIds)
+                book.Authors.Add(db.Authors.FirstOrDefault(a => a.Id == authorid));
         }
 
-        public Book ToEntity() 
+        public Book ToEntity(ApplicationDbContext db) 
         {
             Book book = new Book();
 
-            SetProperties(book);
+            SetProperties(book, db);
 
             return book;
         }

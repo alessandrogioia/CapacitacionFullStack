@@ -10,6 +10,10 @@ namespace Website.Models.Domain
     public class Book : Entity
     {
         #region Constructors
+        public Book() 
+        {
+            Authors = new List<Author>();
+        }
         #endregion
 
         #region Properties
@@ -23,6 +27,7 @@ namespace Website.Models.Domain
         public Guid PublisherId { get; set; }
         [ForeignKey("PublisherId")]
         public Publisher Publisher { get; set; }
+        public List<Author> Authors { get; set; }
         #endregion
 
         #region Methods

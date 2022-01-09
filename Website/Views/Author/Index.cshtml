@@ -1,0 +1,27 @@
+﻿@model List<Website.Models.DTOs.AuthorDTOs.AuthorGridDTO>
+
+<div class="col-md-12">
+
+    <div style="text-align:right">
+        <a class="btn btn-primary" href="/Author/Create">Create</a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var author in Model) 
+            {
+            <tr>
+                <td>@author.Name</td>
+                <td><a class="btn btn-primary" href="/Author/Edit/@author.Id">Edit</a></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
