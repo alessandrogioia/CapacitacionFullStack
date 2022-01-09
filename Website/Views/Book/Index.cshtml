@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-4" style="text-align:right">
             <h3>
-                <a class="btn btn-primary btn-lg" href="/Publisher/Create">Create</a>
+                <a class="btn btn-primary btn-lg" href="/Book/Create">Create</a>
             </h3>
         </div>
     </div>
@@ -42,7 +42,10 @@
                             }
                         </ul>
                     </td>
-                    <td><a class="btn btn-primary" href="/Book/Edit/@book.Id">Edit</a></td>
+                    <td>
+                        <a class="btn btn-primary" href="/Book/Edit/@book.Id">Edit</a>
+                        <button class="btn btn-danger" onclick="deleteBook('@book.Id')">Delete</button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -53,6 +56,29 @@
 
 @section Scripts{
     <script>
+
+        function deleteBook(_id) {
+            swal({
+                title: "Wanna delete this book?",
+                text: "Once deleted, you will not be able to recover this book",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: "/Book/Delete",
+                            type: "POST",
+                            data: { id: _id },
+                            success: function (result) {
+                                window.location.reload();
+                            }
+                        });
+                    }
+                });
+        }
+
         $(document).ready(function () {
             $('#book-table').DataTable();
         });

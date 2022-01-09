@@ -25,10 +25,13 @@
         <tbody>
             @foreach (var publisher in Model)
             {
-                <tr>
-                    <td>@publisher.Name</td>
-                    <td><a class="btn btn-primary" href="/Publisher/Edit/@publisher.Id">Edit</a></td>
-                </tr>
+            <tr>
+                <td>@publisher.Name</td>
+                <td>
+                    <a class="btn btn-primary" href="/Publisher/Edit/@publisher.Id">Edit</a>
+                    <button class="btn btn-danger" onclick="deletePublisher('@publisher.Id')">Delete</button>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
@@ -37,6 +40,30 @@
 
 @section Scripts{
     <script>
+
+        function deletePublisher(_id) {
+            swal({
+                title: "Wanna delete this publisher?",
+                text: "Once deleted, you will not be able to recover this publisher",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: "/Publisher/Delete",
+                            type: "POST",
+                            data: { id: _id },
+                            success: function (result) {
+                                window.location.reload();
+                            }
+                        });
+                    }
+                });
+        }
+
+
         $(document).ready(function () {
             $('#publisher-table').DataTable();
         });

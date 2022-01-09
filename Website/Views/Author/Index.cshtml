@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-4" style="text-align:right">
             <h3>
-                <a class="btn btn-primary btn-lg" href="/Publisher/Create">Create</a>
+                <a class="btn btn-primary btn-lg" href="/Author/Create">Create</a>
             </h3>
         </div>
     </div>
@@ -27,7 +27,10 @@
             {
                 <tr>
                     <td>@author.Name</td>
-                    <td><a class="btn btn-primary" href="/Author/Edit/@author.Id">Edit</a></td>
+                    <td><a class="btn btn-primary" href="/Author/Edit/@author.Id">Edit</a>
+                        <button class="btn btn-danger" onclick="deleteAuthor('@author.Id')">Delete</button>
+                    </td>
+                    
                 </tr>
             }
         </tbody>
@@ -37,7 +40,30 @@
 
 @section Scripts{
     <script>
-        $(document).ready(function () {
+        function deleteAuthor(_id) {
+            swal({
+                title: "Wanna delete this author?",
+                text: "Once deleted, you will not be able to recover this author",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: "/Author/Delete",
+                            type: "POST",
+                            data: { id: _id},
+                            success: function (result) {
+                                window.location.reload();
+                            }
+                        });
+                    }
+                });
+        }
+
+        $(document).ready(function ()
+        {
             $('#author-table').DataTable();
         });
     </script>

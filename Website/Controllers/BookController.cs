@@ -99,5 +99,16 @@ namespace Website.Controllers
             ViewData["AuthorList"] = db.Authors.Select(p => new ComboListItem { Text = p.Name, Value = p.Id }).ToList();
         }
 
+        [HttpPost]
+        public ActionResult Delete(Guid id)
+        {
+            Book dbBook = db.Books.Find(id);
+
+            db.Books.Remove(dbBook);
+            db.SaveChanges();
+
+            return Json("OK", JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
