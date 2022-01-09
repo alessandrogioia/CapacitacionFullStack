@@ -31,7 +31,7 @@
         <div class="form-group">
             <label for="Description">Publisher</label>
 
-            <select class="form-control" id="SelectedPublisherId" name="SelectedPublisherId">
+            <select class="form-control select2" id="SelectedPublisherId" name="SelectedPublisherId">
                 @foreach (var publisher in publisherList)
                 {
                     <option @(publisher.Value == Model.SelectedPublisherId ? "selected" : "") value="@publisher.Value">@publisher.Text</option>
@@ -54,7 +54,7 @@
         <div class="form-group">
             <label for="Description">Authors</label>
 
-            <select class="form-control" id="SelectedAuthorIds" name="SelectedAuthorIds" multiple>
+            <select class="form-control select2" id="SelectedAuthorIds" name="SelectedAuthorIds" multiple>
                 @foreach (var author in authorList)
                 {
                     <option @(Model.SelectedAuthorIds.Any(a => a == author.Value) ? "selected" : "") value="@author.Value">@author.Text</option>
