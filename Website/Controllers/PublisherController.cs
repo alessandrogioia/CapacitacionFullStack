@@ -61,8 +61,8 @@ namespace Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                Publisher dbBook = db.Publishers.Find(model.Id);
-                model.SetProperties(dbBook);
+                Publisher dbPublisher = db.Publishers.Find(model.Id);
+                model.SetProperties(dbPublisher);
 
                 db.SaveChanges();
 
