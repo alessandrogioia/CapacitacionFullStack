@@ -1,0 +1,27 @@
+﻿@model List<Website.Models.DTOs.PublisherDTOs.PublisherGridDTO>
+
+<div class="col-md-12">
+
+    <div style="text-align:right">
+        <a class="btn btn-primary" href="/Publisher/Create">Create</a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var publisher in Model) 
+            {
+            <tr>
+                <td>@publisher.Name</td>
+                <td><a class="btn btn-primary" href="/Publisher/Edit/@publisher.Id">Edit</a></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

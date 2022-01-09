@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -18,6 +19,10 @@ namespace Website.Models.Domain
         
         [StringLength(13)]
         public string ISBN { get; set; }
+
+        public Guid PublisherId { get; set; }
+        [ForeignKey("PublisherId")]
+        public Publisher Publisher { get; set; }
         #endregion
 
         #region Methods

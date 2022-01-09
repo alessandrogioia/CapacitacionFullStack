@@ -19,6 +19,7 @@ namespace Website.Models.DTOs.BookDTOs
             this.ISBN = book.ISBN;
             this.ReleaseDate = book.ReleaseDate;
             this.Title = book.Name;
+            this.SelectedPublisherId = book.PublisherId;
         }
         #endregion
 
@@ -39,6 +40,9 @@ namespace Website.Models.DTOs.BookDTOs
         [Required(ErrorMessage = "Please provide a ISBN number")]
         public string ISBN { get; set; }
 
+        [Required(ErrorMessage = "Please select a publisher")]
+        public Guid? SelectedPublisherId { get; set; }
+
         #endregion
 
         #region Methods
@@ -52,6 +56,7 @@ namespace Website.Models.DTOs.BookDTOs
             book.ISBN = this.ISBN;
             book.Name = this.Title;
             book.ReleaseDate = this.ReleaseDate.Value;        
+            book.PublisherId = this.SelectedPublisherId.Value;        
         }
 
         public Book ToEntity() 

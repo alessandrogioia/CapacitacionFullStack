@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Website.Models;
 using Website.Models.Domain;
 using Website.Models.DTOs.BookDTOs;
+using Website.Models.DTOs.GenericDTOs;
 
 namespace Website.Controllers
 {
@@ -29,6 +30,7 @@ namespace Website.Controllers
         public ActionResult Create() 
         {
             BookFormDTO model = new BookFormDTO();
+            AddViewDataForForms();
 
             return View(model);
         }
@@ -45,6 +47,8 @@ namespace Website.Controllers
 
                 return RedirectToAction("Index");
             }
+
+            AddViewDataForForms();
             return View();
         }
 
@@ -54,6 +58,7 @@ namespace Website.Controllers
 
             BookFormDTO model = new BookFormDTO(dbBook);
 
+            AddViewDataForForms();
             return View(model);
         }
 
@@ -69,9 +74,15 @@ namespace Website.Controllers
 
                 return RedirectToAction("Index");
             }
+
+            AddViewDataForForms();
             return View(model);
         }
 
+        private void AddViewDataForForms() 
+        {
+            ViewData["PublishersList"] = db.Publishers.Select(p => new ComboListItem { Text = p.Name, Value = p.Id }).ToList();
+        }
 
     }
 }
