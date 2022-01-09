@@ -2,6 +2,10 @@
 
 <div class="col-md-12">
 
+    <div style="text-align:right">
+        <a class="btn btn-primary" href="/Book/Create">Create</a>
+    </div>
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -12,14 +16,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var book in Model) 
+            @foreach (var book in Model)
             {
-            <tr>
-                <td>@book.ISBN</td>
-                <td>@book.Title</td>
-                <td>@book.ReleaseDate</td>
-                <td><a class="btn btn-primary" href="/Book/Edit/@book.Id">Edit</a></td>
-            </tr>
+                <tr>
+                    <td>@book.ISBN</td>
+                    <td>@book.Title</td>
+                    <td>@book.ReleaseDate</td>
+                    <td><a class="btn btn-primary" href="/Book/Edit/@book.Id">Edit</a></td>
+                </tr>
             }
         </tbody>
     </table>

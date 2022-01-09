@@ -45,8 +45,8 @@ namespace Website.Models.DTOs.BookDTOs
 
         public void SetProperties(Book book) 
         {
-            if (this.Id != Guid.Empty)
-                book.Id = this.Id;
+            if (this.Id == Guid.Empty)
+                book.Id = Guid.NewGuid();
 
             book.Description = this.Description;
             book.ISBN = this.ISBN;
