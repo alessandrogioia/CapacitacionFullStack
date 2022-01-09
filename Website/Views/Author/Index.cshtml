@@ -2,11 +2,20 @@
 
 <div class="col-md-12">
 
-    <div style="text-align:right">
-        <a class="btn btn-primary" href="/Author/Create">Create</a>
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Authors</h3>
+        </div>
+        <div class="col-md-4" style="text-align:right">
+            <h3>
+                <a class="btn btn-primary btn-lg" href="/Publisher/Create">Create</a>
+            </h3>
+        </div>
     </div>
 
-    <table class="table table-striped">
+    <hr />
+
+    <table class="table table-striped" id="author-table">
         <thead>
             <tr>
                 <th>Name</th>
@@ -14,14 +23,22 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var author in Model) 
+            @foreach (var author in Model)
             {
-            <tr>
-                <td>@author.Name</td>
-                <td><a class="btn btn-primary" href="/Author/Edit/@author.Id">Edit</a></td>
-            </tr>
+                <tr>
+                    <td>@author.Name</td>
+                    <td><a class="btn btn-primary" href="/Author/Edit/@author.Id">Edit</a></td>
+                </tr>
             }
         </tbody>
     </table>
 
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#author-table').DataTable();
+        });
+    </script>
+}

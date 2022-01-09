@@ -8,6 +8,8 @@
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/select2.css" rel="stylesheet" />
     <link href="~/Content/select2.bootstrap.theme.css" rel="stylesheet" />
+    <link href="~/Content/datatables.css" rel="stylesheet" />
+
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -23,8 +25,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Books", "Index", "Book")</li>
-                    <li>@Html.ActionLink("Publishers", "About", "Publisher")</li>
-                    <li>@Html.ActionLink("Authors", "Contact", "Author")</li>
+                    <li>@Html.ActionLink("Publishers", "Index", "Publisher")</li>
+                    <li>@Html.ActionLink("Authors", "Index", "Author")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -39,10 +41,11 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script src="~/Scripts/select2.js"></script>
+    <script src="~/Scripts/datatables.js"></script>
 
     <script>
         $(document).ready(function () {
-            $('.select2').select2({ theme: "bootstrap"});
+            $('.select2').select2({ theme: "bootstrap" });
         });
     </script>
 </body>
