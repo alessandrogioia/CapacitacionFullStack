@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Website.Helpers;
 using Website.Models.Domain;
 
 namespace Website.Models.DTOs.BookDTOs
@@ -23,6 +24,7 @@ namespace Website.Models.DTOs.BookDTOs
             this.ReleaseDate = book.ReleaseDate;
             this.Title = book.Name;
             this.SelectedPublisherId = book.PublisherId;
+            this.PhotoUrl = "/File/DownloadImage?filename=" + book.Photo;
 
             SelectedAuthorIds = new List<Guid>();
             if (book.Authors != null)
@@ -54,6 +56,8 @@ namespace Website.Models.DTOs.BookDTOs
         [Required(ErrorMessage = "Please select a publisher")]
         public Guid? SelectedPublisherId { get; set; }
         public List<Guid> SelectedAuthorIds { get; set; }
+        public HttpPostedFileBase Photo { get; set; }
+        public string PhotoUrl { get; set; }
 
         #endregion
 
@@ -73,6 +77,9 @@ namespace Website.Models.DTOs.BookDTOs
             book.Authors.Clear();
             foreach (Guid authorid in this.SelectedAuthorIds)
                 book.Authors.Add(db.Authors.FirstOrDefault(a => a.Id == authorid));
+
+            if (Photo != null)
+                book.Photo = FileHelper.SubirArchivo(Photo);
         }
 
         public Book ToEntity(ApplicationDbContext db) 

@@ -28,6 +28,7 @@ namespace Website.Models.Domain
         [ForeignKey("PublisherId")]
         public Publisher Publisher { get; set; }
         public List<Author> Authors { get; set; }
+        public string Photo { get; set; }
         #endregion
 
         #region Methods
