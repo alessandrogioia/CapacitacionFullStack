@@ -16,12 +16,13 @@ namespace Website.Controllers
         // GET: Book
         public ActionResult Index()
         {
-            List<BookGridDTO> books = db.Books.ToList().Select(b => new BookGridDTO
+            List<BookGridDTO> books = db.Books.Include("Publisher").ToList().Select(b => new BookGridDTO
             {
                 Id = b.Id,
                 ISBN = b.ISBN,
                 ReleaseDate = b.ReleaseDate.ToString("dd-MM-yyyy"),
-                Title = b.Name
+                Title = b.Name,
+                Publisher = b.Publisher != null ? b.Publisher.Name : "-"
             }).ToList();
 
             return View(books);
