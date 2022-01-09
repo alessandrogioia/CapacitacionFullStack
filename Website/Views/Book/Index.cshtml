@@ -13,6 +13,7 @@
                 <th>Title</th>
                 <th>Release Date</th>
                 <th>Publisher</th>
+                <th>Authors</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -24,6 +25,14 @@
                 <td>@book.Title</td>
                 <td>@book.ReleaseDate</td>
                 <td>@book.Publisher</td>
+                <td>
+                    <ul>
+                        @foreach (var author in book.Authors)
+                        {
+                            <li>@author</li>
+                        }
+                    </ul>
+                </td>
                 <td><a class="btn btn-primary" href="/Book/Edit/@book.Id">Edit</a></td>
             </tr>
             }

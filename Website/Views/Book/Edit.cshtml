@@ -4,6 +4,7 @@
 
 @{
     List<ComboListItem> publisherList = ViewData["PublishersList"] as List<ComboListItem>;
+    List<ComboListItem> authorList = ViewData["AuthorList"] as List<ComboListItem>;
 }
 <div class="col-md-12">
 
@@ -28,7 +29,7 @@
         </div>
 
         <div class="form-group">
-            <label for="Description">Description</label>
+            <label for="Description">Publisher</label>
 
             <select class="form-control" id="SelectedPublisherId" name="SelectedPublisherId">
                 @foreach (var publisher in publisherList)
@@ -48,6 +49,17 @@
             <div class="invalid-feedback">
                 @Html.ValidationMessageFor(m => m.ReleaseDate)
             </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Description">Authors</label>
+
+            <select class="form-control" id="SelectedAuthorIds" name="SelectedAuthorIds" multiple>
+                @foreach (var author in authorList)
+                {
+                    <option @(Model.SelectedAuthorIds.Any(a => a == author.Value) ? "selected" : "") value="@author.Value">@author.Text</option>
+                }
+            </select>
         </div>
 
         <div class="form-group">

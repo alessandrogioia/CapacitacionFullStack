@@ -11,6 +11,7 @@ namespace Website.Models.DTOs.BookDTOs
         public string ISBN { get; set; }
         public string ReleaseDate { get; set; }
         public string Publisher { get; set; }
+        public List<string> Authors { get; set; }
 
     }
 }

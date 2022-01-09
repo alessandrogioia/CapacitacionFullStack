@@ -16,13 +16,17 @@ namespace Website.Controllers
         // GET: Book
         public ActionResult Index()
         {
-            List<BookGridDTO> books = db.Books.Include("Publisher").ToList().Select(b => new BookGridDTO
+            List<BookGridDTO> books = db.Books
+                            .Include("Publisher")
+                            .Include("Authors")
+                            .ToList().Select(b => new BookGridDTO
             {
                 Id = b.Id,
                 ISBN = b.ISBN,
                 ReleaseDate = b.ReleaseDate.ToString("dd-MM-yyyy"),
                 Title = b.Name,
-                Publisher = b.Publisher != null ? b.Publisher.Name : "-"
+                Publisher = b.Publisher != null ? b.Publisher.Name : "-",
+                Authors = b.Authors != null ? b.Authors.Select(a => a.Name).ToList() : new List<string>()
             }).ToList();
 
             return View(books);
@@ -43,7 +47,7 @@ namespace Website.Controllers
 
             if (ModelState.IsValid) 
             {
-                Book book = model.ToEntity();
+                Book book = model.ToEntity(db);
 
                 db.Books.Add(book);
                 db.SaveChanges();
@@ -57,7 +61,7 @@ namespace Website.Controllers
 
         public ActionResult Edit(Guid id)
         {
-            Book dbBook = db.Books.Find(id);
+            Book dbBook = db.Books.Include("Authors").FirstOrDefault(b => b.Id == id);
 
             BookFormDTO model = new BookFormDTO(dbBook);
 
@@ -72,8 +76,8 @@ namespace Website.Controllers
 
             if (ModelState.IsValid)
             {
-                Book dbBook = db.Books.Find(model.Id);
-                model.SetProperties(dbBook);
+                Book dbBook = db.Books.Include("Authors").FirstOrDefault(b => b.Id == model.Id);
+                model.SetProperties(dbBook, db);
 
                 db.SaveChanges();
 
@@ -92,6 +96,7 @@ namespace Website.Controllers
         private void AddViewDataForForms() 
         {
             ViewData["PublishersList"] = db.Publishers.Select(p => new ComboListItem { Text = p.Name, Value = p.Id }).ToList();
+            ViewData["AuthorList"] = db.Authors.Select(p => new ComboListItem { Text = p.Name, Value = p.Id }).ToList();
         }
 
     }
