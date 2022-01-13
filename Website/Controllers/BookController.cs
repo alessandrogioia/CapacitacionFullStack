@@ -145,6 +145,18 @@ namespace Website.Controllers
             return View(model);
         }
 
+
+        public ActionResult Details(Guid id)
+        {
+            Book dbBook = db.Books
+                            .Include("Publisher")
+                            .Include("Authors")
+                            .FirstOrDefault(b => b.Id == id);
+
+            BookFormDTO model = new BookFormDTO(dbBook);
+
+            return View(model);
+        }
         private void BookCustomValidations(BookFormDTO model)
         {
             if (db.Books.Any(b => b.ISBN == model.ISBN && b.Id != model.Id))

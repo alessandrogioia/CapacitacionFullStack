@@ -14,9 +14,16 @@ namespace Website.Controllers
         {
             string filepath = FileHelper.filePath + filename;
 
-            byte[] bytes = System.IO.File.ReadAllBytes(filepath);
+            try
+            {
+                byte[] bytes = System.IO.File.ReadAllBytes(filepath);
 
-            return File(bytes, "image/");
+                return File(bytes, "image/");
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
