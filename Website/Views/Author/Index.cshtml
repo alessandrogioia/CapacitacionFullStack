@@ -1,40 +1,50 @@
 ﻿@model List<Website.Models.DTOs.AuthorDTOs.AuthorGridDTO>
 
-<div class="col-md-12">
+<<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3>Authors</h3>
+                    </div>
+                    <div class="col-md-4" style="text-align:right">
+                        <h3>
+                            <a class="btn btn-primary btn-lg" href="/Publisher/Create">Create</a>
+                        </h3>
+                    </div>
+                </div>
 
-    <div class="row">
-        <div class="col-md-8">
-            <h3>Authors</h3>
-        </div>
-        <div class="col-md-4" style="text-align:right">
-            <h3>
-                <a class="btn btn-primary btn-lg" href="/Author/Create">Create</a>
-            </h3>
+                <div class="table-responsive">
+
+                    <table class="table table-striped" id="author-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var author in Model)
+                            {
+                                <tr>
+                                    <td>@author.Name</td>
+                                    <td>
+                                        <a class="btn btn-primary" href="/Author/Edit/@author.Id">Edit</a>
+                                        <button class="btn btn-danger" onclick="deleteAuthor('@author.Id')">Delete</button>
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+            </div>
         </div>
     </div>
-
-    <hr />
-
-    <table class="table table-striped" id="author-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var author in Model)
-            {
-                <tr>
-                    <td>@author.Name</td>
-                    <td><a class="btn btn-primary" href="/Author/Edit/@author.Id">Edit</a>
-                        <button class="btn btn-danger" onclick="deleteAuthor('@author.Id')">Delete</button>
-                    </td>
-                    
-                </tr>
-            }
-        </tbody>
-    </table>
 
 </div>
 
@@ -53,7 +63,7 @@
                         $.ajax({
                             url: "/Author/Delete",
                             type: "POST",
-                            data: { id: _id},
+                            data: { id: _id },
                             success: function (result) {
                                 window.location.reload();
                             }
@@ -62,8 +72,7 @@
                 });
         }
 
-        $(document).ready(function ()
-        {
+        $(document).ready(function () {
             $('#author-table').DataTable();
         });
     </script>

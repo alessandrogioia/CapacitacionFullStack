@@ -1,40 +1,48 @@
 ﻿@model List<Website.Models.DTOs.PublisherDTOs.PublisherGridDTO>
 
-<div class="col-md-12">
+<<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3>Publishers</h3>
+                    </div>
+                    <div class="col-md-4" style="text-align:right">
+                        <h3>
+                            <a class="btn btn-primary btn-lg" href="/Publisher/Create">Create</a>
+                        </h3>
+                    </div>
+                </div>
 
-    <div class="row">
-        <div class="col-md-8">
-            <h3>Publishers</h3>
-        </div>
-        <div class="col-md-4" style="text-align:right">
-            <h3>
-                <a class="btn btn-primary btn-lg" href="/Publisher/Create">Create</a>
-            </h3>
+                <div class="table-responsive">
+
+                    <table class="table table-striped" id="publisher-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var publisher in Model)
+                            {
+                                <tr>
+                                    <td>@publisher.Name</td>
+                                    <td>
+                                        <a class="btn btn-primary" href="/Publisher/Edit/@publisher.Id">Edit</a>
+                                        <button class="btn btn-danger" onclick="deletePublisher('@publisher.Id')">Delete</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
         </div>
     </div>
-
-    <hr />
-
-    <table class="table table-striped" id="publisher-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var publisher in Model)
-            {
-            <tr>
-                <td>@publisher.Name</td>
-                <td>
-                    <a class="btn btn-primary" href="/Publisher/Edit/@publisher.Id">Edit</a>
-                    <button class="btn btn-danger" onclick="deletePublisher('@publisher.Id')">Delete</button>
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
 
 </div>
 

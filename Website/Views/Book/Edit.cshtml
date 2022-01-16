@@ -6,7 +6,82 @@
     List<ComboListItem> publisherList = ViewData["PublishersList"] as List<ComboListItem>;
     List<ComboListItem> authorList = ViewData["AuthorList"] as List<ComboListItem>;
 }
-<div class="col-md-12">
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Edit Book</h4>
+        <form class="form-horizontal form-material mx-2" action="/Book/Edit" method="post" enctype='multipart/form-data'>
+
+            <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+
+            <div class="form-group">
+                <label for="Photo">Photo</label>
+                <input type="file" id="Photo" name="Photo">
+            </div>
+
+            <div class="form-group">
+                <label for="ISBN">ISBN</label>
+                <input class="form-control" id="ISBN" name="ISBN" value="@Model.ISBN">
+                <div class="invalid-feedback">
+                    @Html.ValidationMessageFor(m => m.ISBN)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Name">Title</label>
+                <input class="form-control" id="Title" name="Title" value="@Model.Title">
+                <div class="invalid-feedback">
+                    @Html.ValidationMessageFor(m => m.Title)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Description">Publisher</label>
+
+                <select class="form-control select2" id="SelectedPublisherId" name="SelectedPublisherId">
+                    @foreach (var publisher in publisherList)
+                    {
+                        <option @(publisher.Value == Model.SelectedPublisherId ? "selected" : "") value="@publisher.Value">@publisher.Text</option>
+                    }
+                </select>
+
+                <div class="invalid-feedback">
+                    @Html.ValidationMessageFor(m => m.SelectedPublisherId)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="ReleaseDate">Release Date</label>
+                <input type="date" class="form-control" id="ReleaseDate" name="ReleaseDate" value="@(Model.ReleaseDate.HasValue ? Model.ReleaseDate.Value.ToString("yyyy-MM-dd"): DateTime.Today.ToString("yyyy-MM-dd"))">
+                <div class="invalid-feedback">
+                    @Html.ValidationMessageFor(m => m.ReleaseDate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Description">Authors</label>
+
+                <select class="form-control select2" id="SelectedAuthorIds" name="SelectedAuthorIds" multiple>
+                    @foreach (var author in authorList)
+                    {
+                        <option @(Model.SelectedAuthorIds.Any(a => a == author.Value) ? "selected" : "") value="@author.Value">@author.Text</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Description">Description</label>
+                <textarea class="form-control" id="Description" name="Description">@Model.Description</textarea>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div class="col-md-12">
 
     <form action="/Book/Edit" method="post" enctype='multipart/form-data'>
 
@@ -83,7 +158,7 @@
         </div>
     </form>
 
-</div>
+</div>*@
 
 
 
