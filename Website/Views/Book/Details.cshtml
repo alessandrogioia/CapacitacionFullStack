@@ -1,14 +1,56 @@
 ﻿
-@model Website.Models.DTOs.BookDTOs.BookFormDTO
+@model Website.Models.DTOs.BookDTOs.BookDetailsDTO
 
 <div class="col-md-12">
 
     <div class="card">
         <div class="card-header">
-            @Model.Title
+            <h3>@Model.Title</h3>
         </div>
         <div class="card-body">
+            <div class="row">
 
+                <div class="col-md-4">
+                    @if (!string.IsNullOrEmpty(Model.PhotoUrl))
+                    {
+                        <img style="max-width: 100%;" src="@Model.PhotoUrl" />
+                    }
+                </div>
+
+                <div class="col-md-8">
+
+                    <div class="row">
+
+                        <div>
+                            <label style="font-weight:bold">ISBN:</label>
+                            <label>@Model.ISBN</label>
+                        </div>
+                        <div>
+                            <label style="font-weight:bold">Release Date:</label>
+                            <label>@Model.ReleaseDate</label>
+                        </div>
+                        <div>
+                            <label style="font-weight:bold">Publisher:</label>
+                            <label>@Model.Publisher</label>
+                        </div>
+                        <div>
+                            <label style="font-weight:bold">Authors:</label>
+                            <ul>
+                                @foreach (string author in Model.Authors)
+                                {
+                                    <li>@author</li>
+                                }
+                            </ul>
+                        </div>
+                        <div>
+                            <label style="font-weight:bold">Description:</label>
+                            <label>@Model.Description</label>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
     </div>
 

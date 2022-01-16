@@ -153,7 +153,7 @@ namespace Website.Controllers
                             .Include("Authors")
                             .FirstOrDefault(b => b.Id == id);
 
-            BookFormDTO model = new BookFormDTO(dbBook);
+            BookDetailsDTO model = new BookDetailsDTO(dbBook);
 
             return View(model);
         }

@@ -208,6 +208,7 @@
     <Compile Include="Models\Domain\Book.cs" />
     <Compile Include="Models\Domain\Entity.cs" />
     <Compile Include="Models\Domain\Publisher.cs" />
+    <Compile Include="Models\DTOs\BookDTOs\BookDetailsDTO.cs" />
     <Compile Include="Models\DTOs\GenericDTOs\ComboListItem.cs" />
     <Compile Include="Models\DTOs\AuthorDTOs\AuthorFormDTO.cs" />
     <Compile Include="Models\DTOs\AuthorDTOs\AuthorGridDTO.cs" />
