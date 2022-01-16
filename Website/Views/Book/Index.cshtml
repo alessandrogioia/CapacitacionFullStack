@@ -110,6 +110,7 @@
                         orderable: false,
                         mRender: function (data, type, row) {
                             let buttons_html = `<a class="btn btn-primary" href="/Book/Edit/${row.Id}">Edit</a>`;
+                            buttons_html += `<a class="btn btn-info" href="/Book/Details/${row.Id}">Details</a>`;
                             buttons_html += `<button class="btn btn-danger" onclick="deleteBook('${row.Id}')">Delete</button>`;
 
                             return buttons_html;

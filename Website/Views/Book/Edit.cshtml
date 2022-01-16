@@ -15,6 +15,12 @@
             <input type="hidden" id="Id" name="Id" value="@Model.Id" />
 
             <div class="form-group">
+                <div>
+                    @if (!string.IsNullOrEmpty(Model.PhotoUrl))
+                    {
+                        <img src="@Model.PhotoUrl" style="max-width:250px; max-height:250px" />
+                    }
+                </div>
                 <label for="Photo">Photo</label>
                 <input type="file" id="Photo" name="Photo">
             </div>

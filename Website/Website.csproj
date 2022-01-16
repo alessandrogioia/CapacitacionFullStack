@@ -172,6 +172,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BookController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Models\Domain\Book.cs" />
     <Compile Include="Models\Domain\Entity.cs" />
     <Compile Include="Models\Domain\Publisher.cs" />
+    <Compile Include="Models\DTOs\BookDTOs\BookDetailsDTO.cs" />
     <Compile Include="Models\DTOs\GenericDTOs\ComboListItem.cs" />
     <Compile Include="Models\DTOs\AuthorDTOs\AuthorFormDTO.cs" />
     <Compile Include="Models\DTOs\AuthorDTOs\AuthorGridDTO.cs" />
@@ -527,10 +529,11 @@
     <Content Include="Views\Author\Edit.cshtml" />
     <Content Include="Views\Author\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Book\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Default\" />
     <Folder Include="Views\File\" />
   </ItemGroup>
   <ItemGroup>
